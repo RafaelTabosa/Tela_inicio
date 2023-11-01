@@ -10,27 +10,31 @@ import NotificacoesScreen from './src/NotificacoesScreen';
 
 function HomeScreen({ navigation }) {
   const data = [
-    { title: "Anotações", action: () => navigation.navigate('Anotações') },
-    { title: "Configurações", action: () => navigation.navigate('Configurações') },
-    { title: "Notificações", action: () => navigation.navigate('Notificações') },
-    { title: "Botão 4", action: () => {} },
+    { title: "Anotações", icon: "ios-calendar", action: () => navigation.navigate('Anotações') },
+    { title: "Configurações", icon: "ios-settings", action: () => navigation.navigate('Configurações') },
+    { title: "Notificações", icon: "ios-notifications", action: () => navigation.navigate('Notificações') },
   ];
 
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.button} onPress={item.action}>
-      <Text>{item.title}</Text>
-    </TouchableOpacity>
+    <Icon name={item.icon} size={50} color="blue" />
+    <Text>{item.title}</Text>
+  </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
       <Text>Pagina Inicial</Text>
-      <FlatList
-        data={data}
-        numColumns={2}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderItem}
-      />
+      <View style={styles.buttonContainer}>
+        {data.slice(0, 2).map((item, index) => (
+          <View key={index}>{renderItem({ item })}</View>
+        ))}
+      </View>
+      <View style={styles.buttonContainer}>
+        {data.slice(2).map((item, index) => (
+          <View key={index}>{renderItem({ item })}</View>
+        ))}
+      </View>
     </View>
   );
 }
@@ -56,6 +60,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   button: {
     width: 190,
     height: 200,
@@ -63,7 +72,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'lightblue',
     margin: 5,
-    borderRadius: 20,
   },
 });
 
